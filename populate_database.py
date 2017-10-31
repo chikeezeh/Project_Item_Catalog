@@ -39,3 +39,22 @@ session.commit()
 category4 = Category(name="Baseball")
 session.add(category4)
 session.commit()
+
+# add items to each category
+# category1 item1
+item1 = Item(name="Soccer Cleats", description="Footwear for playing soccer",
+             category=category1)
+
+# category2 item1
+item1 = Item(name="Snowboard", description="A board for sking",
+             category=category2)
+
+# category3 item1
+item1 = Item(name="Frisbee", description="Plate that is thrown",
+             category=category3)
+
+# category4 item1
+item1 = Item(name="Bat", description="Used to hit the ball in baseball",
+             category=category4)
+
+print "added all catalog items"
