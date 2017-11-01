@@ -1,6 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
+from flask import Flask
+
+# create the flask app instant
+app = Flask(__name__)
 
 engine = create_engine('sqlite:///catalog.db')
 # Bind the engine to the metadata of the Base class so that the
@@ -17,12 +21,35 @@ DBSession = sessionmaker(bind=engine)
 # session.rollback()
 session = DBSession()
 
-categories = session.query(Category).all()
+# show all categories
 
-for category in categories:
-    print category.name
 
-category1 = session.query(Category).first()
-item1 = session.query(Item).filter_by(id=category1.id).one()
-print "\n"
-print item1.name
+@app.route('/category/')
+def showCategory():
+    return 'All the Catalog categories'
+
+
+@app.route('/category/<int:category_id>/item')
+def showItem(category_id):
+    return 'All the items in a category'
+
+
+@app.route('/category/<int:category_id>/item/new')
+def newItem(category_id):
+    return 'Add new Item'
+
+
+@app.route('/category/<int:category_id>/<int:item_id>/edit')
+def editItem(category_id, item_id):
+    return 'Edit an Item'
+
+
+@app.route('/category/<int:category_id>/<int:item_id>/delete')
+def deleteItem(category_id, item_id):
+    return 'delete an Item'
+
+
+if __name__ == '__main__':
+    app.secret_key = 'super_secret_key'
+    app.debug = True
+    app.run(host='0.0.0.0', port=5000)
