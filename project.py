@@ -39,17 +39,17 @@ def showItem(category_id):
     return render_template('items.html', items=items)
 
 
-@app.route('/category/<int:category_id>/new')
+@app.route('/category/<int:category_id>/item/new')
 def newItem(category_id):
     return render_template('additem.html')
 
 
-@app.route('/category/<int:category_id>/<int:item_id>/edit')
+@app.route('/category/<int:category_id>/item/<int:item_id>/edit')
 def editItem(category_id, item_id):
     return render_template('edititem.html')
 
 
-@app.route('/category/<int:category_id>/<int:item_id>/delete')
+@app.route('/category/<int:category_id>/item/<int:item_id>/delete')
 def deleteItem(category_id, item_id):
     return render_template('deleteitem.html')
 
