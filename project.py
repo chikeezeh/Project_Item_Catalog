@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
-from flask import Flask
+from flask import Flask, render_template
 
 # create the flask app instant
 app = Flask(__name__)
@@ -26,29 +26,30 @@ session = DBSession()
 
 @app.route('/category/')
 def showCategory():
-    return 'All the Catalog categories'
+    return render_template('categories.html')
 
 
 @app.route('/category/<int:category_id>/item')
 def showItem(category_id):
-    return 'All the items in a category'
+    return render_template('items.html')
 
 
-@app.route('/category/<int:category_id>/item/new')
+@app.route('/category/<int:category_id>/new')
 def newItem(category_id):
-    return 'Add new Item'
+    return render_template('additem.html')
 
 
 @app.route('/category/<int:category_id>/<int:item_id>/edit')
 def editItem(category_id, item_id):
-    return 'Edit an Item'
+    return render_template('edititem.html')
 
 
 @app.route('/category/<int:category_id>/<int:item_id>/delete')
 def deleteItem(category_id, item_id):
-    return 'delete an Item'
+    return render_template('deleteitem.html')
 
 
+# run the server on localhost port 5000
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
