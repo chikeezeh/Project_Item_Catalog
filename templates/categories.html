@@ -1,7 +1,7 @@
 <p>
     <ul>
         {% for category in categories %}
-            <a href="#"><li> {{ category.name }} </li></a>
+            <a href="{{url_for('showItem',category_id = category.id)}}"><li> {{ category.name }} </li></a>
         {% endfor %}
     </ul>
 </p>

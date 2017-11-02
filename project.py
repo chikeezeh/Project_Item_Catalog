@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 
 # create the flask app instant
 app = Flask(__name__)
