@@ -26,7 +26,11 @@ session = DBSession()
 
 @app.route('/category/')
 def showCategory():
-    return render_template('categories.html')
+    # get the name of the categories in the category table
+    categories = session.query(Category).all()
+    # return the categories html page, and pass categories from the
+    # database to the html page.
+    return render_template('categories.html', categories=categories)
 
 
 @app.route('/category/<int:category_id>/item')

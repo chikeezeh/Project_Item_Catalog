@@ -1,3 +1,7 @@
 <p>
-    'All the Catalog categories'
+    <ul>
+        {% for category in categories %}
+            <li> {{ category.name }} </li>
+        {% endfor %}
+        </ul>
 </p>
