@@ -1,3 +1,12 @@
 <p>
-    'All the items in a category'
+    <ul>
+        {% for item in items %}
+            <a href="#"><li> {{ item.name }} </li></a>
+            <a href='#'>Edit</a> |
+			<a href='#'>Delete</a>
+        {% endfor %}
+    </ul>
+</p>
+<p>
+    <a href ="#">Add a New Item</a>
 </p>
