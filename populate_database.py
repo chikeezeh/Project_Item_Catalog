@@ -46,11 +46,21 @@ item1 = Item(name="Soccer Cleats", description="Footwear for playing soccer",
              category=category1)
 session.add(item1)
 session.commit()
+# category1 item2
+item2 = Item(name="Soccer Balls", description="Balls for playing soccer",
+             category=category1)
+session.add(item2)
+session.commit()
 
 # category2 item1
 item1 = Item(name="Snowboard", description="A board for sking",
              category=category2)
 session.add(item1)
+session.commit()
+# category2 item2
+item2 = Item(name="Gloves", description="To Keep Warm",
+             category=category2)
+session.add(item2)
 session.commit()
 
 # category3 item1
@@ -58,11 +68,21 @@ item1 = Item(name="Frisbee", description="Plate that is thrown",
              category=category3)
 session.add(item1)
 session.commit()
+# category3 item2
+item2 = Item(name="Jersey", description="Cloth worn while playing Frisbee",
+             category=category3)
+session.add(item2)
+session.commit()
 
 # category4 item1
 item1 = Item(name="Bat", description="Used to hit the ball in baseball",
              category=category4)
 session.add(item1)
+session.commit()
+# category4 item2
+item2 = Item(name="Baseballs", description="Balls for playing Baseball",
+             category=category4)
+session.add(item2)
 session.commit()
 
 print "added all catalog items"
