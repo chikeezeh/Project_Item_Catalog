@@ -49,6 +49,11 @@ def editItem(category_id, item_id):
     return render_template('edititem.html')
 
 
+@app.route('/category/<int:category_id>/item/<int:item_id>/description')
+def descriptionItem(category_id, item_id):
+    return "Item description"
+
+
 @app.route('/category/<int:category_id>/item/<int:item_id>/delete')
 def deleteItem(category_id, item_id):
     return render_template('deleteitem.html')
