@@ -2,11 +2,11 @@
     <ul>
         {% for item in items %}
             <a href="{{url_for('descriptionItem',category_id = category.id, item_id=item.id)}}"><li> {{ item.name }} </li></a>
-            <a href='#'>Edit</a> |
-			<a href='#'>Delete</a>
+            <a href="{{url_for('editItem',category_id = category.id, item_id=item.id)}}">Edit</a> |
+			<a href="{{url_for('deleteItem',category_id = category.id, item_id=item.id)}}">Delete</a>
         {% endfor %}
     </ul>
 </p>
 <p>
-    <a href ="#">Add a New Item</a>
+    <a href ="{{url_for('newItem',category_id = category.id)}}">Add a New Item</a>
 </p>
