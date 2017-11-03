@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, redirect
 
 # create the flask app instant
 app = Flask(__name__)
@@ -46,9 +46,19 @@ def descriptionItem(category_id, item_id):
     return render_template('description.html', item=itemToDescribe)
 
 
-@app.route('/category/<int:category_id>/item/new')
+@app.route('/category/<int:category_id>/item/new', methods=['GET', 'POST'])
 def newItem(category_id):
-    return render_template('additem.html')
+    # check if a post request is sent, then add the new item to the database.
+    # after the new item is added render the category that the new item is in.
+    category = session.query(Category).filter_by(id=category_id).one()
+    if request.method == 'POST':
+        addItem = Item(name=request.form['title'], category_id=category_id)
+        addItem.description = request.form['description']
+        session.add(addItem)
+        session.commit()
+        return redirect(url_for('showItem', category_id=category_id))
+    else:
+        return render_template('additem.html', category_id=category_id, category=category)
 
 
 @app.route('/category/<int:category_id>/item/<int:item_id>/edit')
