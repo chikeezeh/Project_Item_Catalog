@@ -34,9 +34,16 @@ def showCategory():
 
 
 @app.route('/category/<int:category_id>/item')
-def showItem(category_id):
+def showItem(category_id):  # show the items that are in a particular category
+    category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(Item).filter_by(category_id=category_id).all()
-    return render_template('items.html', items=items)
+    return render_template('items.html', items=items, category=category)
+
+
+@app.route('/category/<int:category_id>/item/<int:item_id>/description')
+def descriptionItem(category_id, item_id):
+    itemToDescribe = session.query(Item).filter_by(id=item_id).one()
+    return render_template('description.html', item=itemToDescribe)
 
 
 @app.route('/category/<int:category_id>/item/new')
@@ -47,11 +54,6 @@ def newItem(category_id):
 @app.route('/category/<int:category_id>/item/<int:item_id>/edit')
 def editItem(category_id, item_id):
     return render_template('edititem.html')
-
-
-@app.route('/category/<int:category_id>/item/<int:item_id>/description')
-def descriptionItem(category_id, item_id):
-    return "Item description"
 
 
 @app.route('/category/<int:category_id>/item/<int:item_id>/delete')

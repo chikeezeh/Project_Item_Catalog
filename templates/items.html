@@ -1,7 +1,7 @@
 <p>
     <ul>
         {% for item in items %}
-            <a href="#"><li> {{ item.name }} </li></a>
+            <a href="{{url_for('descriptionItem',category_id = category.id, item_id=item.id)}}"><li> {{ item.name }} </li></a>
             <a href='#'>Edit</a> |
 			<a href='#'>Delete</a>
         {% endfor %}
