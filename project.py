@@ -28,9 +28,14 @@ session = DBSession()
 def showCategory():
     # get the name of the categories in the category table
     categories = session.query(Category).all()
+    # obtain the most recent item added to the database.
+    recentItems = []
+    for i in range(1, 5):
+        items = session.query(Item).filter_by(category_id=i).all()
+        for item in items[-2:]:
+            recentItems.append(item.name)
     # return the categories html page, and pass categories from the
     # database to the html page.
-    recentItems = ['Soccer', 'Baseball', 'Hockey Stick']
     return render_template('categories.html', categories=categories,
                            recentItems=recentItems)
 
