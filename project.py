@@ -65,6 +65,9 @@ def newItem(category_id):
 @app.route('/category/<int:category_id>/item/<int:item_id>/edit',
            methods=['GET', 'POST'])
 def editItem(category_id, item_id):
+    # select the item you want to delete
+    # check if you have a post request, then change the name, description, and
+    # category_id to what the user supplies.
     itemToedit = session.query(Item).filter_by(id=item_id).one()
     if request.method == 'POST':
         if request.form['title']:
