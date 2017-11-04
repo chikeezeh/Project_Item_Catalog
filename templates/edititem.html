@@ -1,3 +1,26 @@
 <p>
-    'Edit an Item'
+    <h1>
+        Edit {{item.name}}
+    </h1>
+</p>
+
+<p>
+    <form action = "{{url_for('editItem',category_id = category_id, item_id = item.id)}}" method="POST">
+        Title: <br />
+        <input type = 'text' name = 'title' placeholder="{{item.name}}" required/>
+        <br /> <br />
+        Description: <br />
+        <input type = 'text' name = 'description' placeholder="{{item.description}}" required/>
+        <br /> <br />
+        Category: <br />
+        <select name="category">
+        <option value=1 {% if category_id == 1%} selected{%endif%}>Soccer</option>
+        <option value=2 {% if category_id == 2%} selected{%endif%}>Snowboarding</option>
+        <option value=3 {% if category_id == 3%} selected{%endif%}>Frisbee</option>
+        <option value=4 {% if category_id == 4%} selected{%endif%}>Baseball</option>
+        </select>
+        <br /><br />
+        <input type="submit" value ='Create'>
+
+    </form>
 </p>
