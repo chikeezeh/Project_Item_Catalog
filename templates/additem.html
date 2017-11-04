@@ -1,3 +1,5 @@
+{% extends "main.html" %}
+{% block body %}
 <p>
     <h1>
         Add new Item to {{category.name}} Category.
@@ -20,7 +22,8 @@
         <option value="Baseball">Baseball</option>
         </select>
         <br /><br />#}
-        <input type="submit" value ='Create'>
+        <input type="submit" value ='Add'>
 
     </form>
 </p>
+{% endblock %}

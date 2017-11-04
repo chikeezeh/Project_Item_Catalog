@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, flash
 
 # create the flask app instant
 app = Flask(__name__)
@@ -55,6 +55,7 @@ def newItem(category_id):
         addItem = Item(name=request.form['title'], category_id=category_id)
         addItem.description = request.form['description']
         session.add(addItem)
+        flash('New Item %s was Successfully Added' % addItem.name)
         session.commit()
         return redirect(url_for('showItem', category_id=category_id))
     else:
@@ -76,6 +77,7 @@ def editItem(category_id, item_id):
             itemToedit.description = request.form['description']
             itemToedit.category_id = category_id
             session.add(itemToedit)
+            flash('Item %s was Successfully Edited' % itemToedit.name)
             session.commit()
         return redirect(url_for('showItem', category_id=category_id))
     else:
@@ -91,6 +93,7 @@ def deleteItem(category_id, item_id):
     itemTodelete = session.query(Item).filter_by(id=item_id).one()
     if request.method == 'POST':
         session.delete(itemTodelete)
+        flash('Item %s was Successfully Deleted' % itemTodelete.name)
         session.commit()
         return redirect(url_for('showItem', category_id=category_id))
     else:

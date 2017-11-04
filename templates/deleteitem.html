@@ -1,3 +1,5 @@
+{% extends "main.html" %}
+{% block body %}
 <p>
     <h1>
         Do you want to delete {{item.name}}?
@@ -9,3 +11,4 @@
            <a href ="{{url_for('showItem', category_id = category_id)}}"> Cancel</a>
         </p>
 </p>
+{% endblock %}

@@ -1,3 +1,5 @@
+{% extends "main.html" %}
+{% block body %}
 <p>
     <ul>
         {% for item in items %}
@@ -10,3 +12,4 @@
 <p>
     <a href ="{{url_for('newItem',category_id = category.id)}}">Add a New Item</a>
 </p>
+{% endblock %}
