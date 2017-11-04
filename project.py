@@ -83,9 +83,19 @@ def editItem(category_id, item_id):
                                category_id=category_id)
 
 
-@app.route('/category/<int:category_id>/item/<int:item_id>/delete')
+@app.route('/category/<int:category_id>/item/<int:item_id>/delete',
+           methods=['POST', 'GET'])
 def deleteItem(category_id, item_id):
-    return render_template('deleteitem.html')
+    # select the item to delete, then remove it from the database
+    # the return back to the category you started from
+    itemTodelete = session.query(Item).filter_by(id=item_id).one()
+    if request.method == 'POST':
+        session.delete(itemTodelete)
+        session.commit()
+        return redirect(url_for('showItem', category_id=category_id))
+    else:
+        return render_template('deleteitem.html', item=itemTodelete,
+                               category_id=category_id)
 
 
 # run the server on localhost port 5000
