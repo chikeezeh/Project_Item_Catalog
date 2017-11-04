@@ -30,7 +30,9 @@ def showCategory():
     categories = session.query(Category).all()
     # return the categories html page, and pass categories from the
     # database to the html page.
-    return render_template('categories.html', categories=categories)
+    recentItems = ['Soccer', 'Baseball', 'Hockey Stick']
+    return render_template('categories.html', categories=categories,
+                           recentItems=recentItems)
 
 
 @app.route('/category/<int:category_id>/item')
