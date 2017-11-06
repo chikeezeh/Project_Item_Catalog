@@ -2,6 +2,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
 from flask import Flask, render_template, url_for, request, redirect, flash
+from flask import jsonify
+
 
 # create the flask app instant
 app = Flask(__name__)
@@ -21,11 +23,34 @@ DBSession = sessionmaker(bind=engine)
 # session.rollback()
 session = DBSession()
 
-# show all categories
+
+@app.route('/category/JSON')
+def showCategoryJSON():  # all category API
+    categories = session.query(Category).all()
+    return jsonify(categories=[category.serialize for category in categories])
+
+
+@app.route('/category/<int:category_id>/item/JSON')
+def showItemJSON(category_id):  # all item in a given category  API
+    items = session.query(Item).filter_by(category_id=category_id).all()
+    return jsonify(items=[item.serialize for item in items])
+
+
+@app.route('/category/<int:category_id>/item/<int:item_id>/JSON')
+def oneItemJSON(category_id, item_id):  # API for one item from a category.
+    category = session.query(Category).filter_by(id=category_id).one()
+    item = session.query(Item).filter_by(category=category, id=item_id).one()
+    return jsonify(item=[item.serialize])
+
+
+@app.route('/category/catalog/JSON')
+def allCatalogJSON():
+    items = session.query(Item).all()
+    return jsonify(catalog=[item.serialize for item in items])
 
 
 @app.route('/category/')
-def showCategory():
+def showCategory():  # show all category
     # get the name of the categories in the category table
     categories = session.query(Category).all()
     # obtain the most recent item added to the database.
@@ -48,7 +73,7 @@ def showItem(category_id):  # show the items that are in a particular category
 
 
 @app.route('/category/<int:category_id>/item/<int:item_id>/description')
-def descriptionItem(category_id, item_id):
+def descriptionItem(category_id, item_id):  # describe a selected item.
     itemToDescribe = session.query(Item).filter_by(id=item_id).one()
     return render_template('description.html', item=itemToDescribe)
 
