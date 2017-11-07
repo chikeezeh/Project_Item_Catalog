@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Category, Item
+from database_setup import Base, Category, Item, User
 from flask import Flask, render_template, url_for, request, redirect, flash
 from flask import jsonify
 # import modules login functionality
