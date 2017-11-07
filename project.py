@@ -3,7 +3,10 @@ from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Item
 from flask import Flask, render_template, url_for, request, redirect, flash
 from flask import jsonify
-
+# import modules for anti forgery state token
+from flask import session as login_session
+import random
+import string
 
 # create the flask app instant
 app = Flask(__name__)
@@ -22,6 +25,18 @@ DBSession = sessionmaker(bind=engine)
 # revert all of them back to the last commit by calling
 # session.rollback()
 session = DBSession()
+
+# Create a state token to preven request forgery
+# Store it in the session for later validation
+
+
+@app.route('/login')
+def showLogin():
+    state = ''.join(random.choice
+                    (string.ascii_uppercase +
+                     string.digits) for x in xrange(32))
+    login_session['state'] = state
+    return render_template('login.html', STATE=state)
 
 
 @app.route('/category/JSON')
