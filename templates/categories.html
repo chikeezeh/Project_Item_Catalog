@@ -12,9 +12,9 @@
     Recently added Items.
 </h1>
 <ul>
-    {% for recentItem in recentItems %}
+    {% for recentItem in recentItems[-4:] %}
         <li>
-            {{recentItem}}
+            {{recentItem.name}} <!-- The 4 most recent items added -->
         </li>
     {% endfor %}
 </ul>

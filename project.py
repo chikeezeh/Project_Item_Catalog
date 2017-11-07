@@ -53,16 +53,13 @@ def allCatalogJSON():
 def showCategory():  # show all category
     # get the name of the categories in the category table
     categories = session.query(Category).all()
-    # obtain the most recent item added to the database.
-    recentItems = []
-    for i in range(1, 5):
-        items = session.query(Item).filter_by(category_id=i).all()
-        for item in items[-2:]:
-            recentItems.append(item.name)
+    # obtain all the items in the catalog and pass that as recentItems to the.
+    # HTML page.
+    items = session.query(Item).all()
     # return the categories html page, and pass categories from the
     # database to the html page.
     return render_template('categories.html', categories=categories,
-                           recentItems=recentItems)
+                           recentItems=items)
 
 
 @app.route('/category/<int:category_id>/item')
