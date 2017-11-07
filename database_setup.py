@@ -67,7 +67,7 @@ class Item(Base):
 
 
 # create the database file
-engine = create_engine('sqlite:///catalog.db')
+engine = create_engine('sqlite:///catalogwithusers.db')
 
 
 Base.metadata.create_all(engine)
