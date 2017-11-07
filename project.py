@@ -132,6 +132,42 @@ def gconnect():
     print "done!"
     return output
 
+# DISCONNECT -Revoke a current user's token and reset their login_session
+
+
+@app.route('/gdisconnect')
+def gdisconnect():
+    access_token = login_session.get('access_token')
+    if access_token is None:
+        print 'Access Token is None'
+        response = make_response(json.dumps(
+            'Current user not connected.'), 401)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    print 'In gdisconnect access token is %s', access_token
+    print 'User name is: '
+    print login_session['username']
+    url = ('https://accounts.google.com/o/oauth2/revoke?token=%s'
+           % login_session['access_token'])
+    h = httplib2.Http()
+    result = h.request(url, 'GET')[0]
+    print 'result is '
+    print result
+    if result['status'] == '200':
+        del login_session['access_token']
+        del login_session['gplus_id']
+        del login_session['username']
+        del login_session['email']
+        del login_session['picture']
+        response = make_response(json.dumps('Successfully disconnected.'), 200)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    else:
+        response = make_response(
+            json.dumps('Failed to revoke token for given user.', 400))
+        response.headers['Content-Type'] = 'application/json'
+        return response
+
 
 @app.route('/category/JSON')
 def showCategoryJSON():  # all category API
@@ -187,6 +223,9 @@ def descriptionItem(category_id, item_id):  # describe a selected item.
 
 @app.route('/category/<int:category_id>/item/new', methods=['GET', 'POST'])
 def newItem(category_id):
+    # check if a user is logged in before they can make a new item.
+    if 'username' not in login_session:
+        return redirect('/login')
     # check if a post request is sent, then add the new item to the database.
     # after the new item is added render the category that the new item is in.
     category = session.query(Category).filter_by(id=category_id).one()
@@ -205,6 +244,9 @@ def newItem(category_id):
 @app.route('/category/<int:category_id>/item/<int:item_id>/edit',
            methods=['GET', 'POST'])
 def editItem(category_id, item_id):
+    # check if a user is logged in before they can make changes to an item.
+    if 'username' not in login_session:
+        return redirect('/login')
     # select the item you want to delete
     # check if you have a post request, then change the name, description, and
     # category_id to what the user supplies.
@@ -227,6 +269,9 @@ def editItem(category_id, item_id):
 @app.route('/category/<int:category_id>/item/<int:item_id>/delete',
            methods=['POST', 'GET'])
 def deleteItem(category_id, item_id):
+    # check if a user is logged in before they can delete an item.
+    if 'username' not in login_session:
+        return redirect('/login')
     # select the item to delete, then remove it from the database
     # the return back to the category you started from
     itemTodelete = session.query(Item).filter_by(id=item_id).one()
