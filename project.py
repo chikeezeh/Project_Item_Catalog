@@ -234,11 +234,15 @@ def allCatalogJSON():
 def showCategory():  # show all category
     # get the name of the categories in the category table
     categories = session.query(Category).all()
-    # obtain all the items in the catalog and pass that as recentItems to the.
-    # HTML page.
-    items = session.query(Item).all()
-    # return the categories html page, and pass categories from the
-    # database to the html page.
+    # check if user is not logged in, then show default items.
+    if 'username' not in login_session:
+        items = session.query(Item).filter_by(user_id=1)
+
+    else:
+        # if the user is logged in, show the recent items they added.
+        items = session.query(Item).filter_by(user_id=login_session['user_id'])
+        # return the categories html page, and pass categories from the
+        # database to the html page.
     return render_template('categories.html', categories=categories,
                            recentItems=items)
 
@@ -246,7 +250,15 @@ def showCategory():  # show all category
 @app.route('/category/<int:category_id>/item')
 def showItem(category_id):  # show the items that are in a particular category
     category = session.query(Category).filter_by(id=category_id).one()
-    items = session.query(Item).filter_by(category_id=category_id).all()
+    # check if user is not logged in, then show default items.
+    if 'username' not in login_session:
+        items = session.query(Item).filter_by(category_id=category_id,
+                                              user_id=1).all()
+    else:
+        # if the user is logged in, show them their own item
+        items = session.query(Item).filter_by(
+            category_id=category_id,
+            user_id=login_session['user_id']).all()
     return render_template('items.html', items=items, category=category)
 
 
