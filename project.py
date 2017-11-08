@@ -168,6 +168,32 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
+# create a user from the login information provided.
+# the user is identified by email, hence using different oauth2 provider, but
+# with the same email address would result in he same user
+
+
+def createUser(login_session):
+    newUser = User(name=login_session['username'], email=login_session[
+                   'email'], picture=login_session['picture'])
+    session.add(newUser)
+    session.commit()
+    user = session.query(User).filter_by(email=login_session['email']).one()
+    return user.id
+
+
+def getUserInfo(user_id):
+    user = session.query(User).filter_by(id=user_id).one()
+    return user
+
+
+def getUserID(email):
+    try:
+        user = session.query(User).filter_by(email=email).one()
+        return user.id
+    except:
+        return None
+
 
 @app.route('/category/JSON')
 def showCategoryJSON():  # all category API
