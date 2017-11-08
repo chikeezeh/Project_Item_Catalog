@@ -119,6 +119,12 @@ def gconnect():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
+    # see if a user exist in the database, if it doesn't make a new one
+    user_id = getUserID(data['email'])
+    if not user_id:
+        user_id = createUser(login_session)
+    login_session['user_id'] = user_id
+
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
@@ -172,6 +178,8 @@ def gdisconnect():
 # the user is identified by email, hence using different oauth2 provider, but
 # with the same email address would result in he same user
 
+# helper functions
+
 
 def createUser(login_session):
     newUser = User(name=login_session['username'], email=login_session[
@@ -193,6 +201,7 @@ def getUserID(email):
         return user.id
     except:
         return None
+# end helper functions
 
 
 @app.route('/category/JSON')
@@ -256,7 +265,9 @@ def newItem(category_id):
     # after the new item is added render the category that the new item is in.
     category = session.query(Category).filter_by(id=category_id).one()
     if request.method == 'POST':
-        addItem = Item(name=request.form['title'], category_id=category_id)
+        addItem = Item(name=request.form['title'],
+                       category_id=category_id,
+                       user_id=login_session['user_id'])
         addItem.description = request.form['description']
         session.add(addItem)
         flash('New Item %s was Successfully Added' % addItem.name)
@@ -270,13 +281,16 @@ def newItem(category_id):
 @app.route('/category/<int:category_id>/item/<int:item_id>/edit',
            methods=['GET', 'POST'])
 def editItem(category_id, item_id):
+    # select the item you want to delete
+    itemToedit = session.query(Item).filter_by(id=item_id).one()
     # check if a user is logged in before they can make changes to an item.
     if 'username' not in login_session:
         return redirect('/login')
-    # select the item you want to delete
+    # check if the user created this item.
+    if itemToedit.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit this item. Please create your own item in order to edit.');}</script><body onload='myFunction()'>"  # noqa
     # check if you have a post request, then change the name, description, and
     # category_id to what the user supplies.
-    itemToedit = session.query(Item).filter_by(id=item_id).one()
     if request.method == 'POST':
         if request.form['title']:
             category_id = request.form['category']
@@ -295,12 +309,13 @@ def editItem(category_id, item_id):
 @app.route('/category/<int:category_id>/item/<int:item_id>/delete',
            methods=['POST', 'GET'])
 def deleteItem(category_id, item_id):
+    # select the item to delete, then remove it from the database
+    itemTodelete = session.query(Item).filter_by(id=item_id).one()
     # check if a user is logged in before they can delete an item.
     if 'username' not in login_session:
         return redirect('/login')
-    # select the item to delete, then remove it from the database
-    # the return back to the category you started from
-    itemTodelete = session.query(Item).filter_by(id=item_id).one()
+    if itemTodelete.user_id != login_session['user_id']:
+        return "<script> function myFunction() {alert('You are not authorized to delete this item. Please create your own item in order to delete.'); } </script > <body onload = 'myFunction()' >"  # noqa
     if request.method == 'POST':
         session.delete(itemTodelete)
         flash('Item %s was Successfully Deleted' % itemTodelete.name)
