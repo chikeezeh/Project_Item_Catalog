@@ -7,8 +7,14 @@
     <form action = "{{url_for('deleteItem',category_id = category_id, item_id = item.id)}}" method="post">
         <input type="submit" value ='Delete'>
     </form>
-        <p>
-           <a href ="{{url_for('showItem', category_id = category_id)}}"> Cancel</a>
-        </p>
+</p>
+<p>
+    <button onclick="goBack()">Cancel</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+            }
+    </script>
 </p>
 {% endblock %}

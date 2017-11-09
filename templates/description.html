@@ -3,4 +3,13 @@
 <p>
     <h1>{{item.description}}</h1>
 </p>
+<p>
+    <button onclick="goBack()">Back</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+            }
+    </script>
+</p>
 {% endblock %}

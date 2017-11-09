@@ -12,4 +12,13 @@
 <p>
     <a href ="{{url_for('newItem',category_id = category.id)}}">Add a New Item</a>
 </p>
+<p>
+    <button onclick="goBack()">Back</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+            }
+    </script>
+</p>
 {% endblock %}
