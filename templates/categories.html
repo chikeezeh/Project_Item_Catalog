@@ -3,6 +3,11 @@
 <h1>
     Categories.
 </h1>
+<h2>
+    {% if creator.id == 1%} Viewing as Guest {%endif%}
+    {% if creator.id != 1%} logged in as {{creator.name}} {%endif%}
+
+</h2>
 <ul>
     {% for category in categories %}
     <a href="{{url_for('showItem',category_id = category.id)}}"><li> {{ category.name }} </li></a>

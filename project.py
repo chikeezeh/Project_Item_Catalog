@@ -243,8 +243,15 @@ def showCategory():  # show all category
         items = session.query(Item).filter_by(user_id=login_session['user_id'])
         # return the categories html page, and pass categories from the
         # database to the html page.
+    # get the name of the user
+    # if the user is not logged in return default user
+    # else return the user
+    if 'username' not in login_session:
+        creator = getUserInfo(1)
+    else:
+        creator = getUserInfo(login_session['user_id'])
     return render_template('categories.html', categories=categories,
-                           recentItems=items)
+                           recentItems=items, creator=creator)
 
 
 @app.route('/category/<int:category_id>/item')
