@@ -9,10 +9,7 @@ as an Object Relational Mapper.
 
 ## **QUICKSTART**
 1. Install [Python](https://www.python.org/downloads/), and [PostgreSQL](https://www.postgresql.org/download/).
-2. Install the following packages with ```pip install [package]```(replace [package] with the required package name);
-...1. Flask
-...2. SQLalchemy
-...3. oauth2client
+2. Install the following packages with ```pip install [package]```(replace [package] with the required package name); Flask, SQLalchemy,oauth2client
 3. Download the files and place them in their respective folders.
 4. Open a terminal and run ```python database_setup.py ``` to setup the database.
 5. On the terminal run ```python populate_database.py ``` to populate the database with default items.
