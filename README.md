@@ -18,9 +18,10 @@ as an Object Relational Mapper.
 8. Create an account with Google to be able to Create, Update and delete Items.
 
 ## **API ENPOINTS**
-1. To view all the category go to ```http://localhost:5000/category/JSON```
-2. To view all the items in a given category go to ``` http://localhost:5000/<int:category_id>/category/JSON ```
-
+1. To view all the category go to ```http://localhost:5000/category/JSON```.
+2. To view all the items in a given category go to ``` http://localhost:5000/<int:category_id>/category/JSON ``` replace ```<int:category_id>``` with an integer from 1 to 4.
+3. To view one specific item in a given category go to ``` http://localhost:5000/category/<int:category_id>/item/<int:item_id>/JSON ``` replace ```<int:category_id>``` with an integer from 1 to 4, and ```<int:item_id>``` with the item id.
+4. To view all the item in the database go to ``` http://localhost:5000/category/category/catalog/JSON```
 
 ## **LICENSE**
 MIT License
