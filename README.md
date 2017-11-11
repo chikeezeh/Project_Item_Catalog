@@ -10,15 +10,16 @@ as an Object Relational Mapper.
 ## **QUICKSTART**
 1. Install [Python](https://www.python.org/downloads/), and [PostgreSQL](https://www.postgresql.org/download/).
 2. Install the following packages with ```pip install [package]```(replace [package] with the required package name);
-..a. Flask
-..b. SQLalchemy
-..c. oauth2client
+...1. Flask
+...2. SQLalchemy
+...3. oauth2client
 3. Download the files and place them in their respective folders.
 4. Open a terminal and run ```python database_setup.py ``` to setup the database.
 5. On the terminal run ```python populate_database.py ``` to populate the database with default items.
 6. Finally, run ```python project.py ``` to run the server.
 7. Open your browser and go to ```http://localhost:5000/category/``` to open the home page.
 8. Create an account with Google to be able to Create, Update and delete Items.
+9. To view the API endpoints
 
 
 ## **LICENSE**
