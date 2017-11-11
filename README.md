@@ -18,7 +18,7 @@ as an Object Relational Mapper.
 5. On the terminal run ```python populate_database.py ``` to populate the database with default items.
 6. Finally, run ```python project.py ``` to run the server.
 7. Open your browser and go to ```http://localhost:5000/category/``` to open the home page.
-8. Create and account with Google to be able to Create, Update and delete Items.
+8. Create an account with Google to be able to Create, Update and delete Items.
 
 
 ## **LICENSE**
@@ -43,4 +43,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-# Under Construction
