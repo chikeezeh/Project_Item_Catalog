@@ -167,7 +167,8 @@ def gdisconnect():
         del login_session['picture']
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
-        return response
+        flash('Successfully logged out')
+        return redirect(url_for('showCategory'))
     else:
         response = make_response(
             json.dumps('Failed to revoke token for given user.', 400))
@@ -253,6 +254,17 @@ def showCategory():  # show all category
     return render_template('categories.html', categories=categories,
                            recentItems=items, creator=creator)
 
+# send the creator information to the header html file.
+
+
+@app.route('/category/creator')
+def itemCreator():
+    if 'username' not in login_session:
+        creator = getUserInfo(1)
+    else:
+        creator = getUserInfo(login_session['user_id'])
+    return render_template('header.html', creator=creator)
+
 
 @app.route('/category/<int:category_id>/item')
 def showItem(category_id):  # show the items that are in a particular category
@@ -266,13 +278,23 @@ def showItem(category_id):  # show the items that are in a particular category
         items = session.query(Item).filter_by(
             category_id=category_id,
             user_id=login_session['user_id']).all()
-    return render_template('items.html', items=items, category=category)
+    if 'username' not in login_session:
+        creator = getUserInfo(1)
+    else:
+        creator = getUserInfo(login_session['user_id'])
+    return render_template('items.html', items=items, category=category,
+                           creator=creator)
 
 
 @app.route('/category/<int:category_id>/item/<int:item_id>/description')
 def descriptionItem(category_id, item_id):  # describe a selected item.
     itemToDescribe = session.query(Item).filter_by(id=item_id).one()
-    return render_template('description.html', item=itemToDescribe)
+    if 'username' not in login_session:
+        creator = getUserInfo(1)
+    else:
+        creator = getUserInfo(login_session['user_id'])
+    return render_template('description.html', item=itemToDescribe,
+                           creator=creator)
 
 
 @app.route('/category/<int:category_id>/item/new', methods=['GET', 'POST'])
@@ -282,6 +304,10 @@ def newItem(category_id):
         return redirect('/login')
     # check if a post request is sent, then add the new item to the database.
     # after the new item is added render the category that the new item is in.
+    if 'username' not in login_session:
+        creator = getUserInfo(1)
+    else:
+        creator = getUserInfo(login_session['user_id'])
     category = session.query(Category).filter_by(id=category_id).one()
     if request.method == 'POST':
         addItem = Item(name=request.form['title'],
@@ -294,7 +320,7 @@ def newItem(category_id):
         return redirect(url_for('showItem', category_id=category_id))
     else:
         return render_template('additem.html', category_id=category_id,
-                               category=category)
+                               category=category, creator=creator)
 
 
 @app.route('/category/<int:category_id>/item/<int:item_id>/edit',
@@ -310,6 +336,10 @@ def editItem(category_id, item_id):
         return "<script>function myFunction() {alert('You are not authorized to edit this item. Please create your own item in order to edit.');}</script><body onload='myFunction()'>"  # noqa
     # check if you have a post request, then change the name, description, and
     # category_id to what the user supplies.
+    if 'username' not in login_session:
+        creator = getUserInfo(1)
+    else:
+        creator = getUserInfo(login_session['user_id'])
     if request.method == 'POST':
         if request.form['title']:
             category_id = request.form['category']
@@ -322,7 +352,7 @@ def editItem(category_id, item_id):
         return redirect(url_for('showItem', category_id=category_id))
     else:
         return render_template('edititem.html', item=itemToedit,
-                               category_id=category_id)
+                               category_id=category_id, creator=creator)
 
 
 @app.route('/category/<int:category_id>/item/<int:item_id>/delete',
@@ -335,6 +365,10 @@ def deleteItem(category_id, item_id):
         return redirect('/login')
     if itemTodelete.user_id != login_session['user_id']:
         return "<script> function myFunction() {alert('You are not authorized to delete this item. Please create your own item in order to delete.'); } </script > <body onload = 'myFunction()' >"  # noqa
+    if 'username' not in login_session:
+        creator = getUserInfo(1)
+    else:
+        creator = getUserInfo(login_session['user_id'])
     if request.method == 'POST':
         session.delete(itemTodelete)
         flash('Item %s was Successfully Deleted' % itemTodelete.name)
@@ -342,7 +376,7 @@ def deleteItem(category_id, item_id):
         return redirect(url_for('showItem', category_id=category_id))
     else:
         return render_template('deleteitem.html', item=itemTodelete,
-                               category_id=category_id)
+                               category_id=category_id, creator=creator)
 
 
 # run the server on localhost port 5000
