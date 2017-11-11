@@ -1,20 +1,29 @@
 {% extends "main.html" %}
 {% block body %}
-<p>
-    <h1>
-        Do you want to delete {{item.name}}?
-    </h1>
-    <form action = "{{url_for('deleteItem',category_id = category_id, item_id = item.id)}}" method="post">
-        <input type="submit" value ='Delete'>
-    </form>
-</p>
-<p>
-    <button onclick="goBack()">Cancel</button>
+<section class="row">
+    <article class="col-sm-12">
+        <p>
+            <h1>
+                Do you want to delete {{item.name}}?
+            </h1>
+            <form action = "{{url_for('deleteItem',category_id = category_id, item_id = item.id)}}" method="post">
+                <input class="btn btn-default btn-danger" type="submit" value ='Delete'>
+            </form>
+        </p>
+    </article>
+</section>
+<section class="row">
+    <article class="col-sm-12">
+        <p>
+            <button class="btn btn-default" onclick="goBack()">Cancel</button>
 
-    <script>
-        function goBack() {
-            window.history.back();
-            }
-    </script>
-</p>
+            <script>
+                function goBack() {
+                    window.history.back();
+                    }
+            </script>
+        </p>
+    </article>
+</section>
+
 {% endblock %}

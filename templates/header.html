@@ -1,0 +1,40 @@
+<header class="row top-menu">
+	<nav class="row">
+		<nav class="col-sm-6">
+			<a href="{{url_for('showCategory')}}">
+				<span class="glyphicon glyphicon-home highlight" aria-hidden="true"></span><button class="btn btn-default highlight">Home</button>
+			</a>
+		</nav>
+		<nav class="col-sm-6 text-right">
+						{%if 'username' not in session %}
+						<a href = "{{url_for('showLogin')}}"><button class="btn btn-default highlight">Login</button></a>
+						{% else %}
+						<a href="{{url_for('gdisconnect')}}"><button class="btn btn-default highlight">Logout</button></a>
+						{%endif%}
+
+		</nav>
+	</nav>
+	<nav class="row">
+		<nav class="col-sm-12">
+			{% if creator.id == 1%}
+				<figure class="creator">
+					<img src="{{ url_for('static', filename='blank_user.gif') }}">
+					<figcaption><h3>Guest</h3></figcaption>
+				</figure>
+			{%endif%}
+			{% if creator.id != 1%}
+			<figure class="creator">
+				<img src="{{creator.picture}}">
+				<figcaption><h3>{{ creator.name }}</h3></figcaption>
+			</figure>
+			{%endif%}
+		</nav>
+	</nav>
+	<nav class="row">
+	    <nav class="col-sm-12">
+	        <hr />
+	    </nav>
+	</nav>
+
+
+</header>

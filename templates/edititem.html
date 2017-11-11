@@ -1,38 +1,49 @@
 {% extends "main.html" %}
 {% block body %}
-<p>
-    <h1>
-        Edit {{item.name}}
-    </h1>
-</p>
+<section class="row">
+    <article class="col-sm-12">
+        <p>
+            <h2>
+                Edit {{item.name}}
+            </h2>
+        </p>
+    </article>
+</section>
+<section class="row">
+    <article class="col-sm-12">
+        <p>
+            <form action = "{{url_for('editItem',category_id = category_id, item_id = item.id)}}" method="POST">
+                Title: <br />
+                <input type = 'text' name = 'title' placeholder="{{item.name}}" required/>
+                <br /> <br />
+                Description: <br />
+                <input type = 'text' name = 'description' placeholder="{{item.description}}" required/>
+                <br /> <br />
+                Category: <br />
+                <select name="category">
+                <option value=1 {% if category_id == 1%} selected{%endif%}>Soccer</option>
+                <option value=2 {% if category_id == 2%} selected{%endif%}>Snowboarding</option>
+                <option value=3 {% if category_id == 3%} selected{%endif%}>Frisbee</option>
+                <option value=4 {% if category_id == 4%} selected{%endif%}>Baseball</option>
+                </select>
+                <br /><br />
+                <input class="btn btn-default" type="submit" value ='Edit'>
 
-<p>
-    <form action = "{{url_for('editItem',category_id = category_id, item_id = item.id)}}" method="POST">
-        Title: <br />
-        <input type = 'text' name = 'title' placeholder="{{item.name}}" required/>
-        <br /> <br />
-        Description: <br />
-        <input type = 'text' name = 'description' placeholder="{{item.description}}" required/>
-        <br /> <br />
-        Category: <br />
-        <select name="category">
-        <option value=1 {% if category_id == 1%} selected{%endif%}>Soccer</option>
-        <option value=2 {% if category_id == 2%} selected{%endif%}>Snowboarding</option>
-        <option value=3 {% if category_id == 3%} selected{%endif%}>Frisbee</option>
-        <option value=4 {% if category_id == 4%} selected{%endif%}>Baseball</option>
-        </select>
-        <br /><br />
-        <input type="submit" value ='Edit'>
+            </form>
+        </p>
+    </article>
+</section>
+<section class="row">
+    <article class="col-sm-12">
+        <p>
+            <button class="btn btn-default" onclick="goBack()">Cancel</button>
 
-    </form>
-</p>
-<p>
-    <button onclick="goBack()">Cancel</button>
-
-    <script>
-        function goBack() {
-            window.history.back();
-            }
-    </script>
-</p>
+            <script>
+                function goBack() {
+                    window.history.back();
+                    }
+            </script>
+        </p>
+    </article>
+</section>
 {% endblock %}

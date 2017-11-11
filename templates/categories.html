@@ -1,26 +1,27 @@
 {% extends "main.html" %}
 {% block body %}
-<h1>
-    Categories.
-</h1>
-<h2>
-    {% if creator.id == 1%} Viewing as Guest {%endif%}
-    {% if creator.id != 1%} logged in as {{creator.name}} {%endif%}
+<section class="row">
+    <article class="col-sm-6">
+        <h2 class="highlight">Categories</h2>
+        <ul>
+            {% for category in categories %}
+            <a href="{{url_for('showItem',category_id = category.id)}}"><li> {{ category.name }} </li></a>
+            {% endfor %}
+        </ul>
 
-</h2>
-<ul>
-    {% for category in categories %}
-    <a href="{{url_for('showItem',category_id = category.id)}}"><li> {{ category.name }} </li></a>
-    {% endfor %}
-</ul>
-<h1>
-    Recently added Items.
-</h1>
-<ul>
-    {% for recentItem in recentItems[-4:] %}
-        <li>
-            {{recentItem.name}} <!-- The 4 most recent items added -->
-        </li>
-    {% endfor %}
-</ul>
+    </article>
+    <article>
+        <h2 class="highlight">
+            Recently added Items.
+        </h2>
+        <ul>
+            {% for recentItem in recentItems[-4:] %}
+                <li>
+                    {{recentItem.name}} <!-- The 4 most recent items added -->
+                </li>
+            {% endfor %}
+        </ul>
+    </article>
+</section>
+
 {% endblock %}

@@ -1,0 +1,48 @@
+body{
+	background:#e8f0f7 ;
+}
+hr {
+  border: 1px solid #011a2d;
+}
+.glyphicon {
+	margin-right: 10px;
+}
+.top-menu {
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+.top-menu p {
+	margin-bottom: 0;
+	line-height: 16px;
+}
+.top-menu a {
+	margin-bottom: 0;
+	line-height: 16px;
+	font-size: 16px;
+	color: #7B7573;
+	font-weight: 400;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+li{
+	color: red;
+}
+section{
+	background:white;
+}
+
+.highlight{
+	color:#011a2d;
+}
+.creator {
+	padding-right: 40px;
+	padding-top: 10px;
+	text-align: right;
+}
+.creator img {
+	width: 100px;
+	border-radius: 50%;
+}

@@ -1,29 +1,40 @@
 {% extends "main.html" %}
 {% block body %}
-<p>
-    <h1>
-        Add new Item to {{category.name}} Category.
-    </h1>
-</p>
+<section class="row">
+    <article class="col-sm-12">
+        <p>
+            <h1>
+                Add new Item to {{category.name}} Category.
+            </h1>
+        </p>
+    </article>
+</section>
+<section class="row">
+    <article class="col-sm-12">
+        <p>
+            <form action = "{{url_for('newItem',category_id = category_id)}}" method="POST">
+                Title: <br />
+                <input type = 'text' name = 'title' placeholder="Item Title" required/>
+                <br /> <br />
+                Description: <br />
+                <input type = 'text' name = 'description' placeholder="Item Description" required/>
+                <br /> <br />
+                <input class="btn btn-default" type="submit" value ='Add'>
+            </form>
+        </p>
+    </article>
+</section>
+<section class="row">
+    <article class="col-sm-12">
+        <p>
+            <button class="btn btn-default" onclick="goBack()">Cancel</button>
 
-<p>
-    <form action = "{{url_for('newItem',category_id = category_id)}}" method="POST">
-        Title: <br />
-        <input type = 'text' name = 'title' placeholder="Item Title" required/>
-        <br /> <br />
-        Description: <br />
-        <input type = 'text' name = 'description' placeholder="Item Description" required/>
-        <br /> <br />
-        {# Category: <br />
-        <select name="category">
-        <option value="Soccer">Soccer</option>
-        <option value="Snowboarding">Snowboarding</option>
-        <option value="Frisbee">Frisbee</option>
-        <option value="Baseball">Baseball</option>
-        </select>
-        <br /><br />#}
-        <input type="submit" value ='Add'>
-
-    </form>
-</p>
+            <script>
+                function goBack() {
+                    window.history.back();
+                    }
+            </script>
+        </p>
+    </article>
+</section>
 {% endblock %}

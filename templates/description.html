@@ -1,15 +1,24 @@
 {% extends "main.html" %}
 {% block body %}
-<p>
-    <h1>{{item.description}}</h1>
-</p>
-<p>
-    <button onclick="goBack()">Back</button>
+<section class="row">
+    <article class="col-sm-12">
+        <p>
+            <h1>{{item.description}}</h1>
+        </p>
+    </article>
+</section>
+<section class="row">
+    <article class="col-sm-12">
+        <p>
+            <button class="btn btn-default" onclick="goBack()">Back</button>
 
-    <script>
-        function goBack() {
-            window.history.back();
-            }
-    </script>
-</p>
+            <script>
+                function goBack() {
+                    window.history.back();
+                    }
+            </script>
+        </p>
+    </article>
+</section>
+
 {% endblock %}

@@ -1,24 +1,37 @@
 {% extends "main.html" %}
 {% block body %}
-<p>
-    <ul>
-        {% for item in items %}
-            <a href="{{url_for('descriptionItem',category_id = category.id, item_id=item.id)}}"><li> {{ item.name }} </li></a>
-            <a href="{{url_for('editItem',category_id = category.id, item_id=item.id)}}">Edit</a> |
-			<a href="{{url_for('deleteItem',category_id = category.id, item_id=item.id)}}">Delete</a>
-        {% endfor %}
-    </ul>
-</p>
-<p>
-    <a href ="{{url_for('newItem',category_id = category.id)}}">Add a New Item</a>
-</p>
-<p>
-    <button onclick="goBack()">Back</button>
+<section class="row">
+    <article class="col-sm-12">
+        <p>
+            <ul>
+                {% for item in items %}
+                    <a href="{{url_for('descriptionItem',category_id = category.id, item_id=item.id)}}"><li> {{ item.name }} </li></a>
+                    <a href="{{url_for('editItem',category_id = category.id, item_id=item.id)}}">Edit</a> |
+        			<a href="{{url_for('deleteItem',category_id = category.id, item_id=item.id)}}">Delete</a>
+                {% endfor %}
+            </ul>
+        </p>
+    </article>
+</section>
+<section class="row">
+    <article class="col-sm-12">
+        <p>
+            <a href ="{{url_for('newItem',category_id = category.id)}}"><button class="btn btn-default">Add a New Item</button></a>
+        </p>
+    </article>
+</section>
+<section class="row">
+    <article class="col-sm-12">
+        <p>
+            <button class="btn btn-default" onclick="goBack()">Back</button>
 
-    <script>
-        function goBack() {
-            window.history.back();
-            }
-    </script>
-</p>
+            <script>
+                function goBack() {
+                    window.history.back();
+                    }
+            </script>
+        </p>
+    </article>
+</section>
+
 {% endblock %}
