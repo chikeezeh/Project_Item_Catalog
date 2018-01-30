@@ -22,7 +22,7 @@ APPLICATION_NAME = "Item Catalog"
 # create the flask app instant
 app = Flask(__name__)
 
-engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
+engine = create_engine('postgresql://federer:grandestslam@localhost:5432/tennis')  # noqa
 # Bind the engine to the metadata of the Base class so that the
 # declaratives can be accessed through a DBSession instance
 Base.metadata.bind = engine

@@ -67,7 +67,7 @@ class Item(Base):
 
 
 # create the database file
-engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
+engine = create_engine('postgresql://federer:grandestslam@localhost:5432/tennis')  # noqa
 
 
 Base.metadata.create_all(engine)
