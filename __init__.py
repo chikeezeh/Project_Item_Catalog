@@ -16,7 +16,7 @@ import requests
 
 # create the CLIENT_ID from the Google JSON file.
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+    open('/var/www/FlaskApp2/FlaskApp2/client_secrets.json', 'r').read())['web']['client_id']  # noqa
 APPLICATION_NAME = "Item Catalog"
 
 # create the flask app instant
@@ -60,7 +60,7 @@ def gconnect():
     code = request.data
     try:
         # Upgrade the authorization code into a credentials object
-        oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
+        oauth_flow = flow_from_clientsecrets('/var/www/FlaskApp2/FlaskApp2/client_secrets.json', scope='')  # noqa
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:
